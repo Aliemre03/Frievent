@@ -4,12 +4,23 @@ import com.frievent.bitirme.domain.Event
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.PagingAndSortingRepository
 import org.springframework.stereotype.Repository
+import java.time.LocalDateTime
+import java.util.Date
 
 @Repository
 interface EventRepository : PagingAndSortingRepository<Event, Long> {
 
     fun findByEventOwnerId(eventOwnerId: Long): List<Event?>
     fun findByEventId(eventId: Long): Event?
+
+    fun findAllByDateAfterAndCategoryIdOrderByDateDesc(date: LocalDateTime,categoryId: Long): List<Event>
+
+    fun findAllByDateAfterAndCategoryIdOrderByDateAsc(date: LocalDateTime,categoryId: Long): List<Event>
+
+
+
+    fun findAllByDateAfterOrderByDateDesc(date: LocalDateTime): List<Event>
+    fun findAllByDateAfterOrderByDateAsc(date: LocalDateTime): List<Event>
 
     @Query(
         value = """ select e.* from participatiens p

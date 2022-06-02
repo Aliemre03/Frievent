@@ -8,11 +8,32 @@ import com.frievent.bitirme.service.EventService
 import com.frievent.bitirme.service.ParticipationService
 import com.frievent.bitirme.service.UserService
 import org.springframework.stereotype.Component
+import java.time.LocalDateTime
+import java.util.Date
 
 @Component
-class Util(private val eventService: EventService, private val participationService: ParticipationService, private val userService: UserService, private val eventRepository: EventRepository) {
-    fun getDetailedEvent(): List<DetailedEvent> {
-        val events = eventService.findAll()
+class Util(
+    private val eventService: EventService,
+    private val participationService: ParticipationService,
+    private val userService: UserService,
+    private val eventRepository: EventRepository
+) {
+    fun getDetailedEvent(customQuery: Map<String, String>): List<DetailedEvent> {
+        val events: List<Event>
+        val date = LocalDateTime.now()
+
+        events = if (customQuery.keys.contains("categoryId")) {
+            if (customQuery["sort"] == "desc")
+                eventRepository.findAllByDateAfterAndCategoryIdOrderByDateDesc(date,customQuery["categoryId"]!!.toLong())
+            else
+                eventRepository.findAllByDateAfterAndCategoryIdOrderByDateAsc(date,customQuery["categoryId"]!!.toLong())
+        } else {
+            if (customQuery["sort"] == "desc")
+                eventRepository.findAllByDateAfterOrderByDateDesc(date)
+            else
+                eventRepository.findAllByDateAfterOrderByDateAsc(date)
+        }
+
         return mapEventAndUser(events)
 
     }
@@ -22,8 +43,8 @@ class Util(private val eventService: EventService, private val participationServ
         return mapEventAndUser(myEvents)
     }
 
-    fun participatedDetailEvent(id: Long): List<DetailedEvent>{
-        val events =  eventRepository.findAllByUserId(id)
+    fun participatedDetailEvent(id: Long): List<DetailedEvent> {
+        val events = eventRepository.findAllByUserId(id)
         return mapEventAndUser(events)
     }
 
