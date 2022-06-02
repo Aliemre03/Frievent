@@ -25,5 +25,9 @@ class UserService(private val userRepository: UserRepository) {
         return userRepository.findById(userId)
     }
 
+    fun findUserById(id: Long): User? {
+        return userRepository.findByUserId(id)
+    }
+
 
 }

@@ -10,6 +10,8 @@ interface UserRepository: CrudRepository<User,Long> {
 
     fun findByEmailAndPassword(email: String, password: String):User?
 
+    fun findByUserId(id: Long): User?
+
 
 
 }
