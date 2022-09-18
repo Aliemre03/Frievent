@@ -25,6 +25,8 @@ Here are some endpoints you can call:
 http://localhost:8080/category
 http://localhost:8080/register
 
+## Logic Design
+
 
 
 
