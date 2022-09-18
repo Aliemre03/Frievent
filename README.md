@@ -34,10 +34,10 @@ http://localhost:8080/register
 
 
 ## Logic Design
-![Logic Design](img/2.jpg)
+![Logic Design](https://github.com/Aliemre03/Frievent/blob/master/img/2.png)
 
 ## Database Relation
-![Database Relation](img/3.jpg)
+![Database Relation](https://github.com/Aliemre03/Frievent/blob/master/img/3.png)
 
 
 
